@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Sprint">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<title>Growth OS · Sprint pulizia</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.7.0/dist/tabler-icons.min.css">
+<style>
+:root{color-scheme:light;--bg:#f6f6f8;--card:#fff;--ink:#18181b;--muted:#71717a;--faint:#a1a1aa;
+--line:#ececf0;--line2:#e0e0e6;--brand:#6d5efc;--soft:#efedff;--brandink:#3a2fb0;
+--ok:#16a34a;--oksoft:#e7f6ec;--warn:#d97706;--warnsoft:#fdf2e3;--bad:#dc2626;--badsoft:#fdecec;
+--sb:env(safe-area-inset-bottom,0px);--st:env(safe-area-inset-top,0px)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.app{max-width:520px;margin:0 auto;padding:0 14px calc(86px + var(--sb));min-height:100vh}
+header{position:sticky;top:0;z-index:20;background:var(--card);border-bottom:1px solid var(--line);margin:0 -14px 14px;padding:calc(11px + var(--st)) 16px 11px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;font-size:16px}
+.logo{width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px}
+.hcount{text-align:right;line-height:1.15}
+.hcount b{font-size:17px;font-weight:600;display:block}
+.hcount small{font-size:10.5px;color:var(--muted)}
+.tab{display:none;animation:f .18s ease}.tab.active{display:block}
+@keyframes f{from{opacity:0;transform:translateY(3px)}to{opacity:1}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px;margin-bottom:12px}
+.card>h3{font-size:13px;font-weight:600;margin-bottom:11px;display:flex;align-items:center;gap:7px}
+.card>h3 .ti{color:var(--brand);font-size:17px}
+.muted{color:var(--muted);font-size:12.5px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:12px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:13px}
+.metric .l{font-size:11.5px;color:var(--muted);font-weight:500;display:flex;align-items:center;gap:5px}
+.metric .n{font-size:25px;font-weight:600;margin-top:4px;letter-spacing:-.02em;line-height:1.05}
+.metric .s{font-size:11.5px;color:var(--faint);margin-top:2px}
+.btn{border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:12px;padding:12px 15px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-family:inherit}
+.btn:active{transform:scale(.98)}
+.btn.pri{background:var(--brand);color:#fff;border-color:var(--brand)}
+.btn.ok{background:var(--ok);color:#fff;border-color:var(--ok)}
+.btn.block{width:100%}
+.btn.big{padding:17px;font-size:16px;border-radius:15px}
+.btn.sm{padding:8px 11px;font-size:13px;border-radius:9px}
+.rule{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.rule:last-child{border:none}
+.rule .ti{font-size:18px;flex:none;margin-top:1px}
+.rule.keep .ti{color:var(--ok)}.rule.cut .ti{color:var(--bad)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.chip{font-size:11.5px;background:var(--soft);color:var(--brandink);padding:4px 9px;border-radius:20px;font-weight:500}
+.step{display:flex;gap:11px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border:none}
+.step .num{width:22px;height:22px;border-radius:50%;background:var(--soft);color:var(--brandink);font-size:11.5px;font-weight:600;display:flex;align-items:center;justify-content:center;flex:none;margin-top:1px}
+.step b{font-weight:600;font-size:13.5px}.step small{display:block;color:var(--muted);font-size:12.5px;margin-top:1px}
+.timer{text-align:center;padding:6px 0 2px}
+.timer .t{font-size:40px;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.timer .lab{font-size:12px;color:var(--muted)}
+.counter{text-align:center;margin:14px 0 10px}
+.counter .n{font-size:62px;font-weight:700;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.counter .lab{font-size:12.5px;color:var(--muted);margin-top:3px}
+.padrow{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:9px}
+.pad{padding:16px 0;font-size:17px;font-weight:700;border-radius:14px;border:1px solid var(--line2);background:var(--card);cursor:pointer;font-family:inherit}
+.pad:active{transform:scale(.97);background:var(--soft)}
+.pad.plus{background:var(--soft);color:var(--brandink);border-color:transparent}
+.bar{height:10px;border-radius:6px;background:#eeeef3;overflow:hidden;margin:9px 0 6px}
+.bar>span{display:block;height:100%;background:var(--brand);border-radius:6px;transition:width .4s}
+.bar.two>span.b2{background:var(--ok)}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.row:last-child{border:none}
+.note{border-radius:12px;padding:12px 13px;font-size:13px;margin-bottom:12px;display:flex;gap:9px;align-items:flex-start}
+.note .ti{font-size:18px;flex:none;margin-top:1px}
+.note.b{background:var(--soft);color:var(--brandink)}
+.note.w{background:var(--warnsoft);color:#92400e}
+.note.d{background:var(--badsoft);color:#991b1b}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:30;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-top:1px solid var(--line);display:flex;max-width:520px;margin:0 auto;padding:7px 4px calc(7px + var(--sb))}
+nav button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:500;color:var(--faint);padding:5px 2px;cursor:pointer;font-family:inherit}
+nav button .ti{font-size:21px}
+nav button.active{color:var(--brand)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(94px + var(--sb));background:var(--ink);color:#fff;padding:10px 16px;border-radius:11px;font-size:13px;font-weight:500;z-index:50;opacity:0;transition:opacity .2s;pointer-events:none;max-width:88%;text-align:center}
+.toast.show{opacity:1}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+input.num{width:100%;border:1px solid var(--line2);border-radius:11px;padding:11px;font-family:inherit;font-size:15px;background:var(--card);color:var(--ink)}
+</style>
+</head>
+<body>
+<h2 class="sr">Sprint pulizia seguiti: metodo nativo Instagram, cronometro, contatore e proiezione della data di fine.</h2>
+<div class="app">
+
+<header>
+  <div class="brand"><span class="logo"><i class="ti ti-bolt"></i></span> Sprint</div>
+  <div class="hcount"><b id="hNow">6.628</b><small>seguiti stimati</small></div>
+</header>
+
+<!-- SPRINT -->
+<section class="tab active" id="tSprint">
+  <div id="preSprint">
+    <div class="note b"><i class="ti ti-route"></i><div><b>Il metodo:</b> lavori dentro Instagram, ordinato per <b>data di follow — meno recenti</b>. Togli il follow direttamente dalla lista, senza aprire i profili. ~3 secondi l'uno.</div></div>
+
+    <div class="card">
+      <h3><i class="ti ti-shield-check"></i> Regola di protezione</h3>
+      <div class="rule keep"><i class="ti ti-circle-check"></i><div><b>Tieni:</b> musicisti con cui hai suonato · locali e venue · wedding &amp; event planner · agenzie · chi conosci di persona.</div></div>
+      <div class="rule cut"><i class="ti ti-circle-x"></i><div><b>Togli:</b> tutto il resto. Se sbagli lo riseguí in 5 secondi — è reversibile.</div></div>
+      <div class="chips" id="netChips"></div>
+    </div>
+
+    <div class="card">
+      <h3><i class="ti ti-list-numbers"></i> I tap in Instagram</h3>
+      <div class="step"><span class="num">1</span><div><b>Profilo → "Seguiti"</b><small>la tua lista dei seguiti</small></div></div>
+      <div class="step"><span class="num">2</span><div><b>Ordina per → Data di follow: meno recenti</b><small>parti dai più vecchi: lì 9 su 10 vanno tolti</small></div></div>
+      <div class="step"><span class="num">3</span><div><b>Tap "Segui già" → Smetti di seguire</b><small>senza aprire il profilo, poi passi al successivo</small></div></div>
+    </div>
+
+    <button class="btn pri block big" id="startBtn"><i class="ti ti-player-play"></i> Avvia sprint di 10 minuti</button>
+    <p class="muted" style="text-align:center;margin-top:9px">Oggi: <b id="todayDone">0</b> tolti · consigliati ~110 in 2 sprint</p>
+  </div>
+
+  <div id="inSprint" style="display:none">
+    <div class="card">
+      <div class="timer"><div class="t" id="clock">10:00</div><div class="lab" id="clockLab">tempo rimasto</div></div>
+      <div class="counter"><div class="n" id="cnt">0</div><div class="lab">tolti in questo sprint</div></div>
+      <div class="padrow">
+        <button class="pad plus" data-add="1">+1</button>
+        <button class="pad plus" data-add="5">+5</button>
+        <button class="pad plus" data-add="10">+10</button>
+      </div>
+      <div class="padrow" style="grid-template-columns:1fr 2fr">
+        <button class="pad" data-add="-1">−1</button>
+        <button class="btn ok" id="endBtn" style="border-radius:14px"><i class="ti ti-check"></i> Fine sprint</button>
+      </div>
+      <p class="muted" style="text-align:center">Conta mentre vai, oppure a fine sprint in blocchi da 10.</p>
+    </div>
+    <div class="note w" id="capNote" style="display:none"><i class="ti ti-alert-triangle"></i><div><b>Sei a 50.</b> Chiudi lo sprint entro 60 e riprendi tra almeno 4 ore.</div></div>
+    <div class="note d"><i class="ti ti-hand-stop"></i><div>Se Instagram dice <b>"Riprova più tardi"</b> o <b>"Azione bloccata"</b>: fermati subito e non toccare nulla per 24 ore.</div></div>
+  </div>
+</section>
+
+<!-- PROGRESSO -->
+<section class="tab" id="tProg">
+  <div class="g2">
+    <div class="metric" id="mNow"><div class="l"><i class="ti ti-users"></i> Seguiti ora</div><div class="n" id="pNow">6.628</div><div class="s">tocca per correggere</div></div>
+    <div class="metric"><div class="l"><i class="ti ti-scissors"></i> Tolti in tutto</div><div class="n" id="pTot">0</div><div class="s">streak <span id="pStreak">0</span> gg</div></div>
+  </div>
+
+  <div class="card">
+    <h3><i class="ti ti-flag"></i> Fase 1 — scendere a 3.000</h3>
+    <div class="bar"><span id="b1" style="width:0%"></span></div>
+    <p class="muted"><span id="p1">0%</span> · mancano <b id="r1">3.628</b> · stima fine <b id="d1">—</b></p>
+  </div>
+  <div class="card">
+    <h3><i class="ti ti-target-arrow"></i> Fase 2 — scendere a 2.000</h3>
+    <div class="bar"><span id="b2" style="width:0%"></span></div>
+    <p class="muted"><span id="p2">0%</span> · mancano <b id="r2">4.628</b> · stima fine <b id="d2">—</b></p>
+  </div>
+
+  <div class="card">
+    <h3><i class="ti ti-chart-bar"></i> Ultimi 7 giorni</h3>
+    <div id="hist"></div>
+    <p class="muted" style="margin-top:8px">Media: <b id="pace">—</b> al giorno</p>
+  </div>
+
+  <div class="card">
+    <h3><i class="ti ti-device-floppy"></i> Backup progresso</h3>
+    <p class="muted" style="margin-bottom:10px">Il progresso resta su questo dispositivo. Salva un file per non perderlo.</p>
+    <div style="display:flex;gap:8px">
+      <button class="btn sm" id="expBtn" style="flex:1"><i class="ti ti-download"></i> Salva</button>
+      <button class="btn sm" id="impBtn" style="flex:1"><i class="ti ti-upload"></i> Riprendi</button>
+    </div>
+    <input type="file" id="impFile" accept="application/json" style="display:none">
+  </div>
+</section>
+
+<!-- METODO -->
+<section class="tab" id="tInfo">
+  <div class="card">
+    <h3><i class="ti ti-bulb"></i> Perché questo metodo</h3>
+    <p class="muted" style="margin-bottom:10px">Nell'export, il <b>78% dei profili da togliere</b> sta nei follow fatti tra 2 e 4 anni fa, dove <b>9 su 10</b> vanno tagliati. Lavorando dal più vecchio non serve decidere: serve scorrere. E la tua rete recente non viene mai toccata.</p>
+    <div class="row"><span>Vecchio metodo (coda a carte)</span><b>~22 s/profilo</b></div>
+    <div class="row"><span>Metodo nativo</span><b>~3 s/profilo</b></div>
+    <div class="row"><span>Tempo totale stimato</span><b>~4 ore invece di 28</b></div>
+  </div>
+  <div class="card">
+    <h3><i class="ti ti-shield-half"></i> Ritmo sicuro</h3>
+    <div class="rule keep"><i class="ti ti-circle-check"></i><div>2 sprint da 10 minuti al giorno, distanti almeno 4 ore (~110 al giorno)</div></div>
+    <div class="rule keep"><i class="ti ti-circle-check"></i><div>Un giorno di stop a settimana</div></div>
+    <div class="rule cut"><i class="ti ti-circle-x"></i><div>Mai centinaia di azioni di fila: è quello che fa scattare i blocchi</div></div>
+    <div class="rule cut"><i class="ti ti-circle-x"></i><div>Al primo avviso di Instagram: stop di 24 ore</div></div>
+  </div>
+  <div class="card">
+    <h3><i class="ti ti-alert-circle"></i> La cosa più importante</h3>
+    <p class="muted">La pulizia non porta follower: serve solo a non far scappare chi arriva. <b>Il primo post dopo 11 mesi vale più di 3.000 unfollow.</b> Venti minuti al giorno qui, il resto dell'energia sui contenuti.</p>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+<nav>
+  <button class="active" data-t="tSprint"><i class="ti ti-bolt"></i>Sprint</button>
+  <button data-t="tProg"><i class="ti ti-chart-line"></i>Progresso</button>
+  <button data-t="tInfo"><i class="ti ti-info-circle"></i>Metodo</button>
+</nav>
+</div>
+
+<script>
+var START=6628, T1=3000, T2=2000, CAP=60, MIN=10;
+var NET=["Milena Mingotti","Simona Rae","Teresa Iannello","Ariane Diakite","Chicco Capiozzo","Gio De Luigi","Hernandez & Sampedro","Parco degli Artisti","Blackout Cafè","San Marino Welcome","@neovisualp"];
+var K="gos-sprint-v1";
+function load(){try{return JSON.parse(localStorage.getItem(K))||{log:{},start:START}}catch(e){return {log:{},start:START}}}
+function save(s){try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}}
+var S=load(); if(!S.log)S.log={}; if(!S.start)S.start=START;
+var $=function(i){return document.getElementById(i)};
+var fmt=function(n){return Math.round(n).toLocaleString("it-IT")};
+var today=function(){return new Date().toISOString().slice(0,10)};
+function toast(m){var t=$("toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(function(){t.classList.remove("show")},1900)}
+
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){
+  document.querySelectorAll("nav button").forEach(function(x){x.classList.toggle("active",x===b)});
+  document.querySelectorAll(".tab").forEach(function(x){x.classList.toggle("active",x.id===b.dataset.t)});
+  window.scrollTo(0,0); render();
+}});
+
+$("netChips").innerHTML=NET.map(function(n){return '<span class="chip">'+n+'</span>'}).join("");
+
+function total(){var t=0;for(var d in S.log)t+=S.log[d];return t}
+function now(){return Math.max(0,S.start-total())}
+function paceVal(){
+  var ds=Object.keys(S.log).sort(), n=0, sum=0;
+  for(var i=Math.max(0,ds.length-7);i<ds.length;i++){sum+=S.log[ds[i]];n++}
+  return n?sum/n:0;
+}
+function eta(target){
+  var rem=now()-target; if(rem<=0)return "raggiunto";
+  var p=paceVal(); if(p<=0)p=110;
+  var days=Math.ceil(rem/p);
+  var d=new Date(); d.setDate(d.getDate()+days);
+  return d.toLocaleDateString("it-IT",{day:"2-digit",month:"short"})+" ("+days+" gg)";
+}
+function streak(){
+  var s=0, d=new Date();
+  for(var i=0;i<400;i++){
+    var k=d.toISOString().slice(0,10);
+    if(S.log[k]&&S.log[k]>0)s++; else if(i>0)break;
+    d.setDate(d.getDate()-1);
+  }
+  return s;
+}
+function render(){
+  var n=now(), tot=total();
+  $("hNow").textContent=fmt(n); $("pNow").textContent=fmt(n); $("pTot").textContent=fmt(tot);
+  $("todayDone").textContent=S.log[today()]||0;
+  $("pStreak").textContent=streak();
+  var g1=S.start-T1, g2=S.start-T2;
+  var pc1=Math.min(100,Math.round(tot/g1*100)), pc2=Math.min(100,Math.round(tot/g2*100));
+  $("b1").style.width=pc1+"%"; $("p1").textContent=pc1+"%"; $("r1").textContent=fmt(Math.max(0,n-T1)); $("d1").textContent=eta(T1);
+  $("b2").style.width=pc2+"%"; $("p2").textContent=pc2+"%"; $("r2").textContent=fmt(Math.max(0,n-T2)); $("d2").textContent=eta(T2);
+  var p=paceVal(); $("pace").textContent=p?Math.round(p):"—";
+  var ds=Object.keys(S.log).sort().slice(-7).reverse(), h="";
+  if(!ds.length)h='<p class="muted">Nessuno sprint ancora.</p>';
+  else ds.forEach(function(d){
+    var dt=new Date(d+"T12:00:00");
+    h+='<div class="row"><span>'+dt.toLocaleDateString("it-IT",{weekday:"short",day:"2-digit",month:"2-digit"})+'</span><b>'+S.log[d]+'</b></div>';
+  });
+  $("hist").innerHTML=h;
+}
+
+$("mNow").onclick=function(){
+  var v=prompt("Seguiti reali adesso (leggili dal profilo):",now());
+  if(v){var num=parseInt(String(v).replace(/\D/g,""),10);
+    if(num>0){S.start=num+total();save(S);render();toast("Allineato ai seguiti reali")}}
+};
+
+var timer=null, elapsed=0, cnt=0;
+function tick(){
+  elapsed++;
+  var left=MIN*60-elapsed;
+  if(left>=0){$("clock").textContent=String(Math.floor(left/60)).padStart(2,"0")+":"+String(left%60).padStart(2,"0");$("clockLab").textContent="tempo rimasto"}
+  else{var e=elapsed-MIN*60;$("clock").textContent="+"+String(Math.floor(e/60)).padStart(2,"0")+":"+String(e%60).padStart(2,"0");$("clockLab").textContent="oltre i 10 minuti"}
+}
+$("startBtn").onclick=function(){
+  cnt=0; elapsed=0; $("cnt").textContent="0"; $("capNote").style.display="none";
+  $("preSprint").style.display="none"; $("inSprint").style.display="block";
+  $("clock").textContent="10:00"; $("clockLab").textContent="tempo rimasto";
+  clearInterval(timer); timer=setInterval(tick,1000);
+};
+document.querySelectorAll("[data-add]").forEach(function(b){b.onclick=function(){
+  cnt=Math.max(0,cnt+parseInt(b.dataset.add,10));
+  $("cnt").textContent=cnt;
+  if(cnt>=50&&cnt<CAP)$("capNote").style.display="flex";
+  if(cnt>=CAP){$("capNote").style.display="flex";$("capNote").innerHTML='<i class="ti ti-hand-stop"></i><div><b>Tetto raggiunto ('+CAP+').</b> Chiudi lo sprint e riprendi tra almeno 4 ore.</div>';}
+}});
+$("endBtn").onclick=function(){
+  clearInterval(timer);
+  if(cnt>0){var d=today(); S.log[d]=(S.log[d]||0)+cnt; save(S); toast(cnt+" registrati · totale oggi "+S.log[d]);}
+  else toast("Sprint chiuso senza registrazioni");
+  $("inSprint").style.display="none"; $("preSprint").style.display="block"; render();
+};
+
+$("expBtn").onclick=function(){
+  var blob=new Blob([JSON.stringify(S,null,2)],{type:"application/json"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+  a.download="growth-os-sprint-"+today()+".json"; a.click(); toast("File salvato");
+};
+$("impBtn").onclick=function(){$("impFile").click()};
+$("impFile").onchange=function(e){
+  var f=e.target.files[0]; if(!f)return;
+  var r=new FileReader();
+  r.onload=function(){try{var j=JSON.parse(r.result);
+    if(j&&j.log){S=j; if(!S.start)S.start=START; save(S); render(); toast("Progresso ripristinato")}
+    else toast("File non valido")}catch(x){toast("File non valido")}};
+  r.readAsText(f);
+};
+
+render();
+</script>
+</body>
+</html>
