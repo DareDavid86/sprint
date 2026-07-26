@@ -224,7 +224,7 @@ function now(){return Math.max(0,S.start-total())}
 function paceVal(){
   var ds=Object.keys(S.log).sort(), n=0, sum=0;
   for(var i=Math.max(0,ds.length-7);i<ds.length;i++){sum+=S.log[ds[i]];n++}
-  return n?sum/n:0;
+  return n>=3?sum/n:0;
 }
 function eta(target){
   var rem=now()-target; if(rem<=0)return "raggiunto";
@@ -251,7 +251,7 @@ function render(){
   var pc1=Math.min(100,Math.round(tot/g1*100)), pc2=Math.min(100,Math.round(tot/g2*100));
   $("b1").style.width=pc1+"%"; $("p1").textContent=pc1+"%"; $("r1").textContent=fmt(Math.max(0,n-T1)); $("d1").textContent=eta(T1);
   $("b2").style.width=pc2+"%"; $("p2").textContent=pc2+"%"; $("r2").textContent=fmt(Math.max(0,n-T2)); $("d2").textContent=eta(T2);
-  var p=paceVal(); $("pace").textContent=p?Math.round(p):"—";
+  var p=paceVal(); $("pace").textContent=p?Math.round(p):"ritmo pieno stimato 110";
   var ds=Object.keys(S.log).sort().slice(-7).reverse(), h="";
   if(!ds.length)h='<p class="muted">Nessuno sprint ancora.</p>';
   else ds.forEach(function(d){
